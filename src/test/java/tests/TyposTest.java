@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import static com.google.common.collect.Iterables.size;
 
-public class AddRemoveElementsTest {
+public class TyposTest {
     WebDriver driver;
 
     @Test
@@ -17,13 +17,10 @@ public class AddRemoveElementsTest {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("http://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Delete']")).click();
-        int numberOfElementsExpected = 1;
-        int numberOfElementsActual = size(driver.findElements(By.xpath("//button[text()='Delete']")));
-        Assert.assertEquals(numberOfElementsActual, numberOfElementsExpected);
+        driver.get("http://the-internet.herokuapp.com/typos");
+        String orthographyExpected = "Sometimes you'll see a typo, other times you won't.";
+        String orthographyActual = driver.findElements(By.tagName("p")).get(1).getText();
+        Assert.assertEquals(orthographyActual, orthographyExpected);
     }
 
     @AfterClass
